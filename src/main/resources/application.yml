@@ -14,3 +14,7 @@ spring:
 
 server:
   port: 8080
+
+jwt:
+  secret: minha-chave-secreta-super-segura-para-jwt-token-geracao-2024-jobboard
+  expiration: 86400000

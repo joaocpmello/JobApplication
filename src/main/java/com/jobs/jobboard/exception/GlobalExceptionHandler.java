@@ -2,6 +2,7 @@ package com.jobs.jobboard.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +18,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleBusinessException(BusinessException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        
+        String message = ex.getMessage().toLowerCase();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        
+        if (message.contains("não encontrado")) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (message.contains("já está em uso") || message.contains("já existe")) {
+            status = HttpStatus.CONFLICT;
+        }
+        
+        return ResponseEntity.status(status).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -29,5 +40,12 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Credenciais inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 }
