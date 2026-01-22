@@ -18,6 +18,8 @@ public class CreateUserRequest {
     @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
     private String password;
 
+    private String role;
+
     public CreateUserRequest() {}
 
     public CreateUserRequest(String name, String email, String password) {
@@ -48,5 +50,13 @@ public class CreateUserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

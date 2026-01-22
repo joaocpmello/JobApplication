@@ -2,6 +2,7 @@ package com.jobs.jobboard.service;
 
 import com.jobs.jobboard.dto.request.CreateUserRequest;
 import com.jobs.jobboard.dto.response.UserResponse;
+import com.jobs.jobboard.entity.Role;
 import com.jobs.jobboard.entity.User;
 import com.jobs.jobboard.exception.BusinessException;
 import com.jobs.jobboard.repository.UserRepository;
@@ -35,6 +36,16 @@ public class UserService {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        
+        if (request.getRole() != null && !request.getRole().isEmpty()) {
+            try {
+                user.setRole(Role.valueOf(request.getRole().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                throw new BusinessException("Role inválida: " + request.getRole());
+            }
+        } else {
+            user.setRole(Role.CANDIDATE);
+        }
 
         User savedUser = userRepository.save(user);
 
@@ -42,19 +53,19 @@ public class UserService {
     }
 
     public UserResponse getUserById(Long id) {
-        User user = userRepository.findById(id)
+        User user = userRepository.findByIdAndNotDeleted(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado com ID: " + id));
         
         return convertToResponse(user);
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id)
+        return userRepository.findByIdAndNotDeleted(id)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado com ID: " + id));
     }
 
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll()
+        return userRepository.findAllNotDeleted()
                 .stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
