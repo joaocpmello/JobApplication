@@ -8,6 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         format_sql: true
@@ -16,5 +17,5 @@ server:
   port: 8080
 
 jwt:
-  secret: minha-chave-secreta-super-segura-para-jwt-token-geracao-2024-jobboard
-  expiration: 86400000
+  secret: ${JWT_SECRET:change-me-change-me-change-me-change-me-change-me-change-me}
+  expiration: ${JWT_EXPIRATION_MS:86400000}

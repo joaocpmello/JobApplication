@@ -1,5 +1,6 @@
 package com.jobs.jobboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,6 +39,7 @@ public class JobVacancy {
     private Company company;
 
     @OneToMany(mappedBy = "jobVacancy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Application> applications = new ArrayList<>();
 
     @Column(name = "deleted_at")

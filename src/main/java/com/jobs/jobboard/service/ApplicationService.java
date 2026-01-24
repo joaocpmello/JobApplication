@@ -1,6 +1,11 @@
 package com.jobs.jobboard.service;
 
+import com.jobs.jobboard.dto.response.ApplicationResponse;
+import com.jobs.jobboard.dto.response.CompanySummaryResponse;
+import com.jobs.jobboard.dto.response.JobSummaryResponse;
+import com.jobs.jobboard.dto.response.UserResponse;
 import com.jobs.jobboard.entity.Application;
+import com.jobs.jobboard.entity.Company;
 import com.jobs.jobboard.entity.JobVacancy;
 import com.jobs.jobboard.entity.JobStatus;
 import com.jobs.jobboard.entity.Role;
@@ -32,7 +37,7 @@ public class ApplicationService {
     }
 
     @Transactional
-    public Application createApplication(Long jobId, String coverLetter) {
+    public ApplicationResponse createApplication(Long jobId, String coverLetter) {
         User currentUser = securityService.getCurrentUser();
         
         if (currentUser.getRole() != Role.CANDIDATE) {
@@ -55,25 +60,54 @@ public class ApplicationService {
         application.setJobVacancy(job);
         application.setCoverLetter(coverLetter);
 
-        return applicationRepository.save(application);
+        return toResponse(applicationRepository.save(application));
     }
 
-    public Application getApplicationById(Long id) {
-        return applicationRepository.findByIdAndNotDeleted(id)
+    @Transactional(readOnly = true)
+    public ApplicationResponse getApplicationById(Long id) {
+        User currentUser = securityService.getCurrentUser();
+
+        Application application = applicationRepository.findByIdAndNotDeleted(id)
                 .orElseThrow(() -> new BusinessException("Candidatura não encontrada"));
+
+        if (currentUser.getRole() == Role.ADMIN) {
+            return toResponse(application);
+        }
+
+        if (currentUser.getRole() == Role.CANDIDATE) {
+            if (!application.getCandidate().getId().equals(currentUser.getId())) {
+                throw new BusinessException("Você não tem permissão para visualizar esta candidatura");
+            }
+            return toResponse(application);
+        }
+
+        if (currentUser.getRole() == Role.COMPANY) {
+            Long ownerUserId = application.getJobVacancy().getCompany().getUser().getId();
+            if (!ownerUserId.equals(currentUser.getId())) {
+                throw new BusinessException("Você não tem permissão para visualizar esta candidatura");
+            }
+            return toResponse(application);
+        }
+
+        throw new BusinessException("Você não tem permissão para visualizar esta candidatura");
     }
 
-    public List<Application> getMyApplications() {
+    @Transactional(readOnly = true)
+    public List<ApplicationResponse> getMyApplications() {
         User currentUser = securityService.getCurrentUser();
         
         if (currentUser.getRole() != Role.CANDIDATE) {
             throw new BusinessException("Apenas candidatos podem visualizar suas candidaturas");
         }
 
-        return applicationRepository.findByCandidateIdAndNotDeleted(currentUser.getId());
+        return applicationRepository.findByCandidateIdAndNotDeleted(currentUser.getId())
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Application> getApplicationsByJob(Long jobId) {
+    @Transactional(readOnly = true)
+    public List<ApplicationResponse> getApplicationsByJob(Long jobId) {
         User currentUser = securityService.getCurrentUser();
         
         JobVacancy job = jobRepository.findByIdAndNotDeleted(jobId)
@@ -87,7 +121,10 @@ public class ApplicationService {
             throw new BusinessException("Você não tem permissão para visualizar candidaturas desta vaga");
         }
 
-        return applicationRepository.findByJobIdAndNotDeleted(jobId);
+        return applicationRepository.findByJobIdAndNotDeleted(jobId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @Transactional
@@ -97,13 +134,52 @@ public class ApplicationService {
         Application application = applicationRepository.findByIdAndNotDeleted(applicationId)
                 .orElseThrow(() -> new BusinessException("Candidatura não encontrada"));
 
+        if (currentUser.getRole() == Role.ADMIN) {
+            application.setDeletedAt(LocalDateTime.now());
+            applicationRepository.save(application);
+            return;
+        }
+
         if (currentUser.getRole() == Role.CANDIDATE) {
             if (!application.getCandidate().getId().equals(currentUser.getId())) {
                 throw new BusinessException("Você não tem permissão para deletar esta candidatura");
             }
+        } else if (currentUser.getRole() == Role.COMPANY) {
+            Long ownerUserId = application.getJobVacancy().getCompany().getUser().getId();
+            if (!ownerUserId.equals(currentUser.getId())) {
+                throw new BusinessException("Você não tem permissão para deletar esta candidatura");
+            }
+        } else {
+            throw new BusinessException("Você não tem permissão para deletar esta candidatura");
         }
 
         application.setDeletedAt(LocalDateTime.now());
         applicationRepository.save(application);
+    }
+
+    private ApplicationResponse toResponse(Application application) {
+        return new ApplicationResponse(
+                application.getId(),
+                toUserResponse(application.getCandidate()),
+                toJobSummary(application.getJobVacancy()),
+                application.getCoverLetter(),
+                application.getCreatedAt(),
+                application.getUpdatedAt()
+        );
+    }
+
+    private UserResponse toUserResponse(User user) {
+        if (user == null) return null;
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+    }
+
+    private JobSummaryResponse toJobSummary(JobVacancy job) {
+        if (job == null) return null;
+        return new JobSummaryResponse(job.getId(), job.getTitle(), toCompanySummary(job.getCompany()));
+    }
+
+    private CompanySummaryResponse toCompanySummary(Company company) {
+        if (company == null) return null;
+        return new CompanySummaryResponse(company.getId(), company.getName(), company.getWebsite());
     }
 }

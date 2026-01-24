@@ -1,8 +1,10 @@
 package com.jobs.jobboard.controller;
 
 import com.jobs.jobboard.dto.request.CreateApplicationRequest;
-import com.jobs.jobboard.entity.Application;
+import com.jobs.jobboard.dto.response.ApplicationResponse;
 import com.jobs.jobboard.service.ApplicationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
+@Tag(name = "Applications", description = "Job application endpoints")
 public class ApplicationController {
 
     private final ApplicationService applicationService;
@@ -25,8 +28,9 @@ public class ApplicationController {
 
     @PostMapping
     @PreAuthorize("hasRole('CANDIDATE')")
-    public ResponseEntity<Application> createApplication(@Valid @RequestBody CreateApplicationRequest request) {
-        Application application = applicationService.createApplication(
+    @Operation(summary = "Apply to a job vacancy (candidate only)")
+    public ResponseEntity<ApplicationResponse> createApplication(@Valid @RequestBody CreateApplicationRequest request) {
+        ApplicationResponse application = applicationService.createApplication(
                 request.getJobId(),
                 request.getCoverLetter()
         );
@@ -34,27 +38,32 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Application> getApplicationById(@PathVariable Long id) {
-        Application application = applicationService.getApplicationById(id);
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'COMPANY', 'ADMIN')")
+    @Operation(summary = "Get an application by id")
+    public ResponseEntity<ApplicationResponse> getApplicationById(@PathVariable Long id) {
+        ApplicationResponse application = applicationService.getApplicationById(id);
         return ResponseEntity.ok(application);
     }
 
     @GetMapping("/my-applications")
     @PreAuthorize("hasRole('CANDIDATE')")
-    public ResponseEntity<List<Application>> getMyApplications() {
-        List<Application> applications = applicationService.getMyApplications();
+    @Operation(summary = "List applications from the current candidate")
+    public ResponseEntity<List<ApplicationResponse>> getMyApplications() {
+        List<ApplicationResponse> applications = applicationService.getMyApplications();
         return ResponseEntity.ok(applications);
     }
 
     @GetMapping("/job/{jobId}")
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<List<Application>> getApplicationsByJob(@PathVariable Long jobId) {
-        List<Application> applications = applicationService.getApplicationsByJob(jobId);
+    @Operation(summary = "List applications for a job vacancy (company only, must own the job)")
+    public ResponseEntity<List<ApplicationResponse>> getApplicationsByJob(@PathVariable Long jobId) {
+        List<ApplicationResponse> applications = applicationService.getApplicationsByJob(jobId);
         return ResponseEntity.ok(applications);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CANDIDATE', 'COMPANY')")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'COMPANY', 'ADMIN')")
+    @Operation(summary = "Delete an application (soft delete)")
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
         applicationService.deleteApplication(id);
         return ResponseEntity.noContent().build();

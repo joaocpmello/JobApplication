@@ -1,8 +1,10 @@
 package com.jobs.jobboard.controller;
 
 import com.jobs.jobboard.dto.request.CreateCompanyRequest;
-import com.jobs.jobboard.entity.Company;
+import com.jobs.jobboard.dto.response.CompanyResponse;
 import com.jobs.jobboard.service.CompanyService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/companies")
+@Tag(name = "Companies", description = "Company profile endpoints")
 public class CompanyController {
 
     private final CompanyService companyService;
@@ -23,8 +26,9 @@ public class CompanyController {
 
     @PostMapping
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Company> createCompany(@Valid @RequestBody CreateCompanyRequest request) {
-        Company company = companyService.createCompany(
+    @Operation(summary = "Create a company profile for the current user (company only)")
+    public ResponseEntity<CompanyResponse> createCompany(@Valid @RequestBody CreateCompanyRequest request) {
+        CompanyResponse company = companyService.createCompany(
                 request.getName(),
                 request.getDescription(),
                 request.getCnpj(),
@@ -34,22 +38,25 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
-        Company company = companyService.getCompanyById(id);
+    @Operation(summary = "Get a company by id")
+    public ResponseEntity<CompanyResponse> getCompanyById(@PathVariable Long id) {
+        CompanyResponse company = companyService.getCompanyById(id);
         return ResponseEntity.ok(company);
     }
 
     @GetMapping("/my-company")
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Company> getMyCompany() {
-        Company company = companyService.getMyCompany();
+    @Operation(summary = "Get the current user's company profile")
+    public ResponseEntity<CompanyResponse> getMyCompany() {
+        CompanyResponse company = companyService.getMyCompany();
         return ResponseEntity.ok(company);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('COMPANY')")
-    public ResponseEntity<Company> updateCompany(@Valid @RequestBody CreateCompanyRequest request) {
-        Company company = companyService.updateCompany(
+    @Operation(summary = "Update the current user's company profile")
+    public ResponseEntity<CompanyResponse> updateCompany(@Valid @RequestBody CreateCompanyRequest request) {
+        CompanyResponse company = companyService.updateCompany(
                 request.getName(),
                 request.getDescription(),
                 request.getCnpj(),
@@ -60,6 +67,7 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('COMPANY')")
+    @Operation(summary = "Delete a company profile (soft delete, must own it)")
     public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();

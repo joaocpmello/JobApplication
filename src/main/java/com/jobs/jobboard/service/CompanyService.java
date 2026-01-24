@@ -1,5 +1,6 @@
 package com.jobs.jobboard.service;
 
+import com.jobs.jobboard.dto.response.CompanyResponse;
 import com.jobs.jobboard.entity.Company;
 import com.jobs.jobboard.entity.Role;
 import com.jobs.jobboard.entity.User;
@@ -24,7 +25,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public Company createCompany(String name, String description, String cnpj, String website) {
+    public CompanyResponse createCompany(String name, String description, String cnpj, String website) {
         User currentUser = securityService.getCurrentUser();
         
         if (currentUser.getRole() != Role.COMPANY) {
@@ -42,27 +43,29 @@ public class CompanyService {
         company.setWebsite(website);
         company.setUser(currentUser);
 
-        return companyRepository.save(company);
+        return toResponse(companyRepository.save(company));
     }
 
-    public Company getCompanyById(Long id) {
-        return companyRepository.findByIdAndNotDeleted(id)
+    public CompanyResponse getCompanyById(Long id) {
+        Company company = companyRepository.findByIdAndNotDeleted(id)
                 .orElseThrow(() -> new BusinessException("Empresa não encontrada"));
+        return toResponse(company);
     }
 
-    public Company getMyCompany() {
+    public CompanyResponse getMyCompany() {
         User currentUser = securityService.getCurrentUser();
         
         if (currentUser.getRole() != Role.COMPANY) {
             throw new BusinessException("Apenas empresas podem visualizar seus dados");
         }
 
-        return companyRepository.findByUserIdAndNotDeleted(currentUser.getId())
+        Company company = companyRepository.findByUserIdAndNotDeleted(currentUser.getId())
                 .orElseThrow(() -> new BusinessException("Empresa não encontrada"));
+        return toResponse(company);
     }
 
     @Transactional
-    public Company updateCompany(String name, String description, String cnpj, String website) {
+    public CompanyResponse updateCompany(String name, String description, String cnpj, String website) {
         User currentUser = securityService.getCurrentUser();
         
         Company company = companyRepository.findByUserIdAndNotDeleted(currentUser.getId())
@@ -77,7 +80,7 @@ public class CompanyService {
         if (cnpj != null) company.setCnpj(cnpj);
         if (website != null) company.setWebsite(website);
 
-        return companyRepository.save(company);
+        return toResponse(companyRepository.save(company));
     }
 
     @Transactional
@@ -93,5 +96,16 @@ public class CompanyService {
 
         company.setDeletedAt(LocalDateTime.now());
         companyRepository.save(company);
+    }
+
+    private CompanyResponse toResponse(Company company) {
+        return new CompanyResponse(
+                company.getId(),
+                company.getName(),
+                company.getDescription(),
+                company.getWebsite(),
+                company.getCreatedAt(),
+                company.getUpdatedAt()
+        );
     }
 }
