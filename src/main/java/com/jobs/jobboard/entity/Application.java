@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "applications", 
-       uniqueConstraints = @UniqueConstraint(columnNames = {"candidate_id", "job_vacancy_id"}))
+@Table(name = "applications",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"candidate_id", "job_vacancy_id"}))
 public class Application {
 
     @Id
@@ -22,6 +22,10 @@ public class Application {
 
     @Column(length = 1000)
     private String coverLetter;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ApplicationStatus status = ApplicationStatus.PENDING;  // NOVO
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
@@ -75,6 +79,14 @@ public class Application {
 
     public void setCoverLetter(String coverLetter) {
         this.coverLetter = coverLetter;
+    }
+
+    public ApplicationStatus getStatus() {  // NOVO
+        return status;
+    }
+
+    public void setStatus(ApplicationStatus status) {  // NOVO
+        this.status = status;
     }
 
     public LocalDateTime getDeletedAt() {

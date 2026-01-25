@@ -1,5 +1,6 @@
 package com.jobs.jobboard.dto.response;
 
+import com.jobs.jobboard.entity.ApplicationStatus;
 import java.time.LocalDateTime;
 
 public class ApplicationResponse {
@@ -8,6 +9,7 @@ public class ApplicationResponse {
     private UserResponse candidate;
     private JobSummaryResponse job;
     private String coverLetter;
+    private ApplicationStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -18,6 +20,7 @@ public class ApplicationResponse {
             UserResponse candidate,
             JobSummaryResponse job,
             String coverLetter,
+            ApplicationStatus status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
     ) {
@@ -25,6 +28,7 @@ public class ApplicationResponse {
         this.candidate = candidate;
         this.job = job;
         this.coverLetter = coverLetter;
+        this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -61,6 +65,14 @@ public class ApplicationResponse {
         this.coverLetter = coverLetter;
     }
 
+    public ApplicationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -77,4 +89,3 @@ public class ApplicationResponse {
         this.updatedAt = updatedAt;
     }
 }
-

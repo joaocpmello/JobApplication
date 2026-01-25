@@ -2,6 +2,7 @@ package com.jobs.jobboard.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class CreateUserRequest {
@@ -15,7 +16,11 @@ public class CreateUserRequest {
     private String email;
 
     @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
+    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
+    @Pattern(
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$",
+            message = "Senha deve conter: letras maiúsculas, minúsculas, números e caracteres especiais (@#$%^&+=!)"
+    )
     private String password;
 
     private String role;

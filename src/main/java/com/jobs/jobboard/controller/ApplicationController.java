@@ -1,12 +1,18 @@
 package com.jobs.jobboard.controller;
 
 import com.jobs.jobboard.dto.request.CreateApplicationRequest;
+import com.jobs.jobboard.dto.request.UpdateApplicationStatusRequest;
 import com.jobs.jobboard.dto.response.ApplicationResponse;
+import com.jobs.jobboard.entity.ApplicationStatus;
 import com.jobs.jobboard.service.ApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,10 +61,25 @@ public class ApplicationController {
 
     @GetMapping("/job/{jobId}")
     @PreAuthorize("hasRole('COMPANY')")
-    @Operation(summary = "List applications for a job vacancy (company only, must own the job)")
-    public ResponseEntity<List<ApplicationResponse>> getApplicationsByJob(@PathVariable Long jobId) {
-        List<ApplicationResponse> applications = applicationService.getApplicationsByJob(jobId);
+    @Operation(summary = "List applications for a job vacancy with pagination (company only, must own the job)")
+    public ResponseEntity<Page<ApplicationResponse>> getApplicationsByJob(
+            @PathVariable Long jobId,
+            @RequestParam(required = false) ApplicationStatus status,
+            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<ApplicationResponse> applications = applicationService.getApplicationsByJob(jobId, status, pageable);
         return ResponseEntity.ok(applications);
+    }
+
+    @PatchMapping("/{id}/status")
+    @PreAuthorize("hasRole('COMPANY')")
+    @Operation(summary = "Update application status (company only, must own the job)")
+    public ResponseEntity<ApplicationResponse> updateApplicationStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateApplicationStatusRequest request
+    ) {
+        ApplicationResponse application = applicationService.updateApplicationStatus(id, request.getStatus());
+        return ResponseEntity.ok(application);
     }
 
     @DeleteMapping("/{id}")

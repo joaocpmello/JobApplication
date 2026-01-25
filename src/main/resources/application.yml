@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/jobboard
-    username: postgres
-    password: postsql123
+    username: jobboard_user
+    password: jobboard123
 
   jpa:
     hibernate:

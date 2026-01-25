@@ -2,6 +2,8 @@ package com.jobs.jobboard.controller;
 
 import com.jobs.jobboard.dto.request.CreateUserRequest;
 import com.jobs.jobboard.dto.response.UserResponse;
+import com.jobs.jobboard.entity.User;
+import com.jobs.jobboard.service.SecurityService;
 import com.jobs.jobboard.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,10 +22,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final SecurityService securityService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SecurityService securityService) {
         this.userService = userService;
+        this.securityService = securityService;
     }
 
     @PostMapping
@@ -31,6 +35,19 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         UserResponse response = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasAnyRole('CANDIDATE', 'COMPANY', 'ADMIN')")
+    @Operation(summary = "Get current authenticated user profile")
+    public ResponseEntity<UserResponse> getCurrentUser() {
+        User currentUser = securityService.getCurrentUser();
+        UserResponse response = new UserResponse(
+                currentUser.getId(),
+                currentUser.getName(),
+                currentUser.getEmail()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -47,13 +64,5 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<UserResponse> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("/email/{email}")
-    @PreAuthorize("hasAnyRole('CANDIDATE', 'COMPANY', 'ADMIN')")
-    @Operation(summary = "Get a user by email")
-    public ResponseEntity<UserResponse> getUserByEmail(@PathVariable String email) {
-        UserResponse response = userService.getUserByEmail(email);
-        return ResponseEntity.ok(response);
     }
 }
