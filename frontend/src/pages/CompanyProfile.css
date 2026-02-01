@@ -1,0 +1,96 @@
+/* ─── Container ─── */
+.cp-container {
+    max-width: 620px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.cp-loading {
+    text-align: center;
+    color: #6b6b7a;
+    padding: 80px 20px;
+}
+
+.cp-title {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 0 0 20px;
+}
+
+/* ─── Message ─── */
+.cp-message {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cp-message.success {
+    background: rgba(46, 204, 113, 0.15);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.cp-message.error {
+    background: rgba(231, 76, 60, 0.15);
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+/* ─── Card ─── */
+.cp-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 14px;
+    padding: 30px;
+}
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+    display: block;
+    color: #a8a8b8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #141428;
+    border: 1.5px solid #2a2a45;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.88rem;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus { border-color: #6c63ff; }
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #4a4a5a; }
+
+/* ─── Save Button ─── */
+.btn-save {
+    width: 100%;
+    padding: 12px;
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+}
+
+.btn-save:hover { background: #574fd6; }
+.btn-save:disabled { background: #3d3a6e; cursor: not-allowed; }

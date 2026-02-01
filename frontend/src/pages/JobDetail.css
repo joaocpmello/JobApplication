@@ -1,0 +1,213 @@
+/* ─── Container ─── */
+.detail-container {
+    max-width: 780px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.detail-loading {
+    text-align: center;
+    color: #6b6b7a;
+    padding: 80px 20px;
+    font-size: 1rem;
+}
+
+/* ─── Back button ─── */
+.detail-back {
+    background: none;
+    border: none;
+    color: #6c63ff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 18px;
+    transition: opacity 0.2s;
+}
+
+.detail-back:hover {
+    opacity: 0.7;
+}
+
+/* ─── Card ──── */
+.detail-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 14px;
+    padding: 32px;
+}
+
+/* ─── Header ─── */
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.detail-header h1 {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 0 0 6px;
+}
+
+.detail-company {
+    color: #6c63ff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.detail-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* ─── Info Grid ─── */
+.detail-info {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 18px 0;
+    border-top: 1px solid #2a2a45;
+    border-bottom: 1px solid #2a2a45;
+    margin-bottom: 24px;
+}
+
+.detail-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.detail-info-label {
+    color: #5a5a6a;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-info-item > span:last-child {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ─── Description ─── */
+.detail-description {
+    margin-bottom: 28px;
+}
+
+.detail-description h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin: 0 0 10px;
+}
+
+.detail-description p {
+    color: #a8a8b8;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* ─── Apply Form ─── */
+.detail-apply {
+    border-top: 1px solid #2a2a45;
+    padding-top: 24px;
+    margin-top: 8px;
+}
+
+.detail-apply h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin: 0 0 14px;
+}
+
+.detail-apply textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: #141428;
+    border: 1.5px solid #2a2a45;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9rem;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.detail-apply textarea:focus {
+    border-color: #6c63ff;
+}
+
+.detail-apply textarea::placeholder {
+    color: #4a4a5a;
+}
+
+.char-count {
+    display: block;
+    text-align: right;
+    color: #5a5a6a;
+    font-size: 0.75rem;
+    margin: 4px 0 12px;
+}
+
+/* ─── Messages ─── */
+.detail-message {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.detail-message.success {
+    background: rgba(46, 204, 113, 0.15);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.detail-message.error {
+    background: rgba(231, 76, 60, 0.15);
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+/* ─── Buttons ─── */
+.btn-apply {
+    width: 100%;
+    padding: 12px;
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-apply:hover {
+    background: #574fd6;
+}
+
+.btn-apply:disabled {
+    background: #3d3a6e;
+    cursor: not-allowed;
+}
+
+.detail-login-hint {
+    margin: 0;
+}

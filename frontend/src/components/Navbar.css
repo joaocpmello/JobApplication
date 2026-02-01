@@ -1,0 +1,105 @@
+/* ─── Navbar ─── */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    background: #1a1a2e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 24px;
+}
+
+.navbar-links a {
+    color: #a8a8b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+    color: #6c63ff;
+}
+
+/* ─── Auth buttons ─── */
+.navbar-auth {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-nav {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-outline {
+    border: 1.5px solid #6c63ff;
+    color: #6c63ff;
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background: #6c63ff;
+    color: #fff;
+}
+
+.btn-primary {
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #574fd6;
+}
+
+/* ─── User section ─── */
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.navbar-username {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-logout {
+    padding: 6px 14px;
+    border: 1.5px solid #e74c3c;
+    background: transparent;
+    color: #e74c3c;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background: #e74c3c;
+    color: #fff;
+}

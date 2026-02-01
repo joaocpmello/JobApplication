@@ -1,0 +1,209 @@
+/* ─── Container ─── */
+.cj-container {
+    max-width: 860px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.cj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cj-header h1 {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+/* ─── States ─── */
+.cj-loading,
+.cj-error,
+.cj-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b6b7a;
+    font-size: 0.95rem;
+}
+
+.cj-error { color: #e74c3c; }
+
+/* ─── New Job Button ─── */
+.btn-new-job {
+    padding: 10px 20px;
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-new-job:hover { background: #574fd6; }
+
+/* ─── Create Form ─── */
+.cj-form-card {
+    background: #1a1a2e;
+    border: 1.5px solid #6c63ff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+}
+
+.cj-form-card h3 {
+    color: #fff;
+    margin: 0 0 18px;
+    font-size: 1.1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.form-row .form-group { flex: 1; }
+
+.form-group { margin-bottom: 14px; }
+
+.form-group label {
+    display: block;
+    color: #a8a8b8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #141428;
+    border: 1.5px solid #2a2a45;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.88rem;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus { border-color: #6c63ff; }
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #4a4a5a; }
+
+.btn-create {
+    width: 100%;
+    padding: 11px;
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.2s;
+}
+
+.btn-create:hover { background: #574fd6; }
+.btn-create:disabled { background: #3d3a6e; cursor: not-allowed; }
+
+/* ─── Job List ─── */
+.cj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ─── Job Card ─── */
+.cj-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cj-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cj-card-header h3 {
+    color: #fff;
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+}
+
+.cj-location {
+    color: #6b6b7a;
+    font-size: 0.82rem;
+    margin: 0;
+}
+
+.cj-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.cj-salary {
+    color: #6b6b7a;
+    font-size: 0.82rem;
+    margin: 0;
+}
+
+/* ─── Card Footer ─── */
+.cj-card-footer {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a45;
+    flex-wrap: wrap;
+}
+
+.btn-view-apps {
+    padding: 7px 16px;
+    background: #6c63ff;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-view-apps:hover { background: #574fd6; }
+
+.btn-del {
+    padding: 7px 14px;
+    background: none;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-del:hover { background: #e74c3c; color: #fff; }

@@ -1,0 +1,144 @@
+/* ─── Container ─── */
+.my-apps-container {
+    max-width: 780px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.my-apps-title {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 0 0 24px;
+}
+
+/* ─── States ─── */
+.app-loading,
+.my-apps-error,
+.my-apps-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b6b7a;
+    font-size: 0.95rem;
+}
+
+.my-apps-error {
+    color: #e74c3c;
+}
+
+.my-apps-empty p {
+    margin: 0 0 18px;
+}
+
+.btn-go-jobs {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #6c63ff;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.btn-go-jobs:hover {
+    background: #574fd6;
+}
+
+/* ─── List ─── */
+.my-apps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ─── Card ─── */
+.my-app-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.my-app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.my-app-title {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.my-app-title:hover {
+    color: #6c63ff;
+}
+
+.my-app-company {
+    color: #6c63ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 4px 0 0;
+}
+
+.my-app-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ─── Cover Letter ─── */
+.my-app-cover {
+    color: #8a8a9a;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin: 0;
+    line-height: 1.5;
+    border-left: 3px solid #2a2a45;
+    padding-left: 12px;
+}
+
+/* ─── Footer ─── */
+.my-app-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a45;
+}
+
+.my-app-date {
+    color: #5a5a6a;
+    font-size: 0.8rem;
+}
+
+.btn-remove {
+    background: none;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-remove:hover {
+    background: #e74c3c;
+    color: #fff;
+}

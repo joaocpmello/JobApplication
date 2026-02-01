@@ -1,0 +1,156 @@
+/* ─── Container ─── */
+.ca-container {
+    max-width: 780px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.ca-loading,
+.ca-error,
+.ca-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b6b7a;
+    font-size: 0.95rem;
+}
+
+.ca-error { color: #e74c3c; }
+
+/* ─── Back ─── */
+.ca-back {
+    background: none;
+    border: none;
+    color: #6c63ff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 18px;
+    transition: opacity 0.2s;
+}
+
+.ca-back:hover { opacity: 0.7; }
+
+/* ─── Header ─── */
+.ca-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ca-header h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.ca-filter {
+    padding: 8px 14px;
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.ca-filter:focus { border-color: #6c63ff; }
+
+.ca-filter option { background: #1a1a2e; }
+
+/* ─── List ─── */
+.ca-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ─── Card ─── */
+.ca-card {
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a45;
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ca-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ca-card-header h3 {
+    color: #fff;
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+}
+
+.ca-email {
+    color: #6b6b7a;
+    font-size: 0.82rem;
+    margin: 0;
+}
+
+.ca-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* ─── Cover ─── */
+.ca-cover {
+    color: #8a8a9a;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin: 0;
+    line-height: 1.5;
+    border-left: 3px solid #2a2a45;
+    padding-left: 12px;
+}
+
+/* ─── Footer ─── */
+.ca-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a45;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ca-date {
+    color: #5a5a6a;
+    font-size: 0.8rem;
+}
+
+/* ─── Status Select ─── */
+.ca-status-select {
+    padding: 7px 12px;
+    background: #141428;
+    border: 1.5px solid #2a2a45;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.82rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.ca-status-select:focus { border-color: #6c63ff; }
+.ca-status-select option { background: #1a1a2e; }
