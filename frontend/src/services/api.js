@@ -48,7 +48,14 @@ export const companyService = {
 export const jobService = {
     create: (data) => api.post("/api/jobs", data),
     getById: (id) => api.get(`/api/jobs/${id}`),
-    search: (params) => api.get("/api/jobs", { params }),
+    search: (params) => {
+        const cleanParams = Object.fromEntries(
+            Object.entries(params).filter(([_, v]) => v !== "" && v !== null && v !== undefined)
+        );
+
+        return api.get("/api/jobs", { params: cleanParams });
+    },
+
     getMyJobs: (params) => api.get("/api/jobs/my-jobs", { params }),
     update: (id, data) => api.put(`/api/jobs/${id}`, data),
     delete: (id) => api.delete(`/api/jobs/${id}`),
