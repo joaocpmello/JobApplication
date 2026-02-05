@@ -146,9 +146,14 @@ public class JobService {
 
     private String normalize(String value) {
         if (value == null) return null;
+
         String trimmed = value.trim();
-        return trimmed.isEmpty() ? null : trimmed;
+
+        if (trimmed.isEmpty()) return null;
+
+        return "%" + trimmed.toLowerCase() + "%";
     }
+
 
     private JobResponse toResponse(JobVacancy job) {
         return new JobResponse(

@@ -35,25 +35,25 @@ public interface JobRepository extends JpaRepository<JobVacancy, Long> {
 
     @Query(
             value = """
-                    SELECT j
-                    FROM JobVacancy j
-                    WHERE j.deletedAt IS NULL
-                      AND j.company.deletedAt IS NULL
-                      AND (:status IS NULL OR j.status = :status)
-                      AND (:companyId IS NULL OR j.company.id = :companyId)
-                      AND (:companyName IS NULL OR LOWER(j.company.name) LIKE LOWER(CONCAT('%', :companyName, '%')))
-                      AND (:title IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%')))
-                    """,
+            SELECT j
+            FROM JobVacancy j
+            WHERE j.deletedAt IS NULL
+              AND j.company.deletedAt IS NULL
+              AND (:status IS NULL OR j.status = :status)
+              AND (:companyId IS NULL OR j.company.id = :companyId)
+              AND (CAST(:companyName AS string) IS NULL OR LOWER(j.company.name) LIKE LOWER(CONCAT('%', CAST(:companyName AS string), '%')))
+              AND (CAST(:title AS string) IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', CAST(:title AS string), '%')))
+            """,
             countQuery = """
-                    SELECT COUNT(j)
-                    FROM JobVacancy j
-                    WHERE j.deletedAt IS NULL
-                      AND j.company.deletedAt IS NULL
-                      AND (:status IS NULL OR j.status = :status)
-                      AND (:companyId IS NULL OR j.company.id = :companyId)
-                      AND (:companyName IS NULL OR LOWER(j.company.name) LIKE LOWER(CONCAT('%', :companyName, '%')))
-                      AND (:title IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%')))
-                    """
+            SELECT COUNT(j)
+            FROM JobVacancy j
+            WHERE j.deletedAt IS NULL
+              AND j.company.deletedAt IS NULL
+              AND (:status IS NULL OR j.status = :status)
+              AND (:companyId IS NULL OR j.company.id = :companyId)
+              AND (CAST(:companyName AS string) IS NULL OR LOWER(j.company.name) LIKE LOWER(CONCAT('%', CAST(:companyName AS string), '%')))
+              AND (CAST(:title AS string) IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', CAST(:title AS string), '%')))
+            """
     )
     Page<JobVacancy> searchJobs(
             @Param("title") String title,
@@ -61,5 +61,5 @@ public interface JobRepository extends JpaRepository<JobVacancy, Long> {
             @Param("companyName") String companyName,
             @Param("status") JobStatus status,
             Pageable pageable
-    );
-}
+    );}
+

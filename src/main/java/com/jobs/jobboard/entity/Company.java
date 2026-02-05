@@ -20,7 +20,7 @@ public class Company {
     @Column(length = 500)
     private String description;
 
-    @Column(name = "cnpj", unique = true)
+    @Column(name = "cnpj", unique = true, columnDefinition = "VARCHAR(20)")
     private String cnpj;
 
     @Column(name = "website")
