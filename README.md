@@ -376,18 +376,10 @@ Application (Candidatura)
 **João Carlos Pereira de Mello**
 
 - GitHub: [@joaocpmello](https://github.com/joaocpmello)
-- LinkedIn: [seu-perfil-linkedin](https://linkedin.com/in/seu-perfil)
-- Email: seu-email@example.com
+- LinkedIn: [João Carlos]([linkedin.com/in/joao-cpmello/)
+- Email: joaocpmello@hotmail.com
 
 ---
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-## 🙏 Agradecimentos
 
 Projeto desenvolvido como parte do portfólio profissional para demonstração de habilidades em desenvolvimento full-stack com Java/Spring Boot e React.
 
