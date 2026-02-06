@@ -376,7 +376,7 @@ Application (Candidatura)
 **João Carlos Pereira de Mello**
 
 - GitHub: [@joaocpmello](https://github.com/joaocpmello)
-- LinkedIn: [João Carlos](linkedin.com/in/joao-cpmello/)
+- LinkedIn: [João Carlos](https://www.linkedin.com/in/joao-cpmello/)
 - Email: joaocpmello@hotmail.com
 
 ---
